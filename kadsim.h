@@ -163,4 +163,6 @@ void call_contract(GethClient &geth,
                    const std::string &contract_addr,
                    const std::string &payload);
 
+/* io.cpp */
+extern void do_put(const char *filename, int n_data, int n_parities);
 #endif

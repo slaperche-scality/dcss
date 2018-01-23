@@ -400,7 +400,22 @@ int cmd_get_bytes(Shell *shell, int argc, char **argv)
 
   // FIXME: atoi is so dirty…
   node->get_bytes(argv[1], atoi(argv[2]));
+  return SHELL_CONT;
+}
 
+int
+cmd_put(Shell *shell,
+        int argc,
+        char **argv)
+{
+  if (argc != 4)
+    {
+      fprintf(stderr, "usage: put file n_data n_parities\n");
+      return SHELL_CONT;
+    }
+
+  do_put(argv[1], atoi(argv[2]), atoi(argv[3]));
+  
   return SHELL_CONT;
 }
 
@@ -412,6 +427,7 @@ struct cmd_def cheat_lookup_cmd = {"cheat_lookup", "lookup the closest node by c
 struct cmd_def rand_node_cmd = {"rand_node", "print a random node id", cmd_rand_node};
 struct cmd_def rand_key_cmd = {"rand_key", "print a random key", cmd_rand_key};
 struct cmd_def show_cmd = {"show", "show k-buckets", cmd_show};
+struct cmd_def put_cmd = {"put", "put a file", cmd_put};
 struct cmd_def find_nearest_cmd = {"find_nearest", "find nearest nodes to", cmd_find_nearest};
 struct cmd_def verbose_cmd = {"verbose", "set verbosity level", cmd_verbose};
 struct cmd_def save_cmd = {"save", "save the network to file", cmd_save};
@@ -427,6 +443,7 @@ struct cmd_def	*cmd_defs[] =
     &bit_length_cmd,
     &buy_storage_cmd,
     &cheat_lookup_cmd,
+    &put_cmd,
     &find_nearest_cmd,
     &get_bytes_cmd,
     &graphviz_cmd,

@@ -1,14 +1,15 @@
 
-CC = g++
+CC = clang++
 
-CFLAGS = -g -Wall -Werror -DHAVE_READLINE
+CFLAGS = -std=c++11 -g -Wall -Werror -DHAVE_READLINE -I../ntl/src
 LDFLAGS = \
 -lcrypto \
 -lreadline \
 -ljsoncpp \
 -lcurl \
 -ljsonrpccpp-common \
--ljsonrpccpp-client
+-ljsonrpccpp-client \
+-L../ntl/src -lntl -lgmpxx -lgmp
 
 OBJS = \
 main.o \
@@ -18,7 +19,8 @@ kad_file.o \
 kad_network.o \
 bit_map.o \
 shell.o \
-cmds.o
+cmds.o \
+io.o
 
 kadsim: $(OBJS)
 	$(CC) -o kadsim $(OBJS) $(LDFLAGS)
